@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\foki\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\foki\\.nuget\\packages"
+    ]
+  }
+}

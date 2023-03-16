@@ -1,0 +1,91 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\dev\\random\\Interceptor\\projform\\projform.csproj": {}
+  },
+  "projects": {
+    "D:\\dev\\random\\Interceptor\\Interceptor\\Interceptor.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\dev\\random\\Interceptor\\Interceptor\\Interceptor.csproj",
+        "projectName": "Interceptor",
+        "projectPath": "D:\\dev\\random\\Interceptor\\Interceptor\\Interceptor.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\dev\\random\\Interceptor\\projform\\projform.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\dev\\random\\Interceptor\\projform\\projform.csproj",
+        "projectName": "projform",
+        "projectPath": "D:\\dev\\random\\Interceptor\\projform\\projform.csproj",
+        "packagesPath": "C:\\Users\\foki\\.nuget\\packages\\",
+        "outputPath": "D:\\dev\\random\\Interceptor\\projform\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\foki\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0-windows7.0": {
+            "targetAlias": "net5.0-windows",
+            "projectReferences": {
+              "D:\\dev\\random\\Interceptor\\Interceptor\\Interceptor.csproj": {
+                "projectPath": "D:\\dev\\random\\Interceptor\\Interceptor\\Interceptor.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0-windows7.0": {
+          "targetAlias": "net5.0-windows",
+          "dependencies": {
+            "IronOcr": {
+              "target": "Package",
+              "version": "[2023.3.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
