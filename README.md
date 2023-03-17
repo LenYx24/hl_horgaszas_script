@@ -23,7 +23,7 @@ Problémák és a megoldáshoz linkek:
 
 
 random felesleges ötletek:
--Olvassa a chatet, és keresi, hogy leírták-e az ic nevünket, ha leírták, akkor vagy elküldi email/messenger-en, vagy elküldi az üzit a chatgpt-nek és amit kapott választ azt leírja ic chatre
--Szintén olvassa a chatet, és figyeli, hogyha írt egy admin a chatre akkor küld egy üzenetet telóra
--Ha errorba ütközik, akkor kilép a szerverről
--console window always on top és logol mint a minecraft szerók 😎
+- Olvassa a chatet, és keresi, hogy leírták-e az ic nevünket, ha leírták, akkor vagy elküldi email/messenger-en, vagy elküldi az üzit a chatgpt-nek és amit kapott választ azt leírja ic chatre
+- Szintén olvassa a chatet, és figyeli, hogyha írt egy admin a chatre akkor küld egy üzenetet telóra
+- Ha errorba ütközik, akkor kilép a szerverről
+- console window always on top és logol mint a minecraft szerók 😎
