@@ -1,7 +1,7 @@
-#HL_horgaszas_script
+HL_horgaszas_script
 ===========
 
-##**Todok**:
+**Todok**:
 1. Mta teljes képernyős módban
 2. Tabolás helyett fókuszálni az ablakot
 3. A csali a hotbarra rakva való használata
