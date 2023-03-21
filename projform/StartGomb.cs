@@ -78,21 +78,8 @@ namespace projform
         }
         void FelrakEgyCsalit()
         {
-            Lenyom(Keys.M);
+            Lenyom(Keys.Two);
             Sleep(50);
-
-            Lenyom(Keys.I);
-            Sleep(50);
-
-            Billentyuzet.MoveMouseTo(835, 512); // csali helye
-            Sleep(1000);
-
-            tabolEgyszer();
-            MouseOperations.RightClick(); // rájobbklikkel a csalira
-
-            Billentyuzet.MoveMouseTo(940, 550); // ráviszi a kurzort a használat gombra
-            tabolEgyszer();
-            MouseOperations.LeftClick(); // végül rákattint a használat gombra
         }
         void DebugPrtscreen(string filename)
         {
