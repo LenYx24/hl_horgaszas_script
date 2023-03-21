@@ -29,6 +29,7 @@ namespace projform
         static float varakozasiIdo = 5.0f;
         IronTesseract ocrSingle = new IronTesseract();
         IronTesseract ocrText = new IronTesseract();
+        static int ELTOLAS_FENTROL = 26; // a window fos miatt felülről el kell tolni xddd
 
         private void button_Click(object sender, EventArgs eventArgs)
         {

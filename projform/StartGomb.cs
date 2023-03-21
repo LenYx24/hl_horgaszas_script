@@ -16,7 +16,7 @@ namespace projform
 {
     public partial class Form1 : Form 
     {
-        private void Start() // Ez a főgomb
+        void Start() // Ez a főgomb
         {
             bool kezdjeujra = false; // meddig folytassa
             do
@@ -34,27 +34,32 @@ namespace projform
                 // elvileg bedobta a csalit
 
                 //kapás része
-                for(int j = 0; j < 4; j++)
+                // most meg kb 1 másodpercenként csinál egy printscreen-t addig amíg nem lesz kapása
+                int k = 0;
+                do
                 {
-                    // most meg kb 1 másodpercenként csinál egy printscreen-t addig amíg nem lesz kapása
-                    do
-                    {
-                        if (vanEKapasod()) break;
-                        Sleep(40);
-                    } while (true);
-                    Debug.WriteLine("KILÉPETT A WHILE-BÓL");
-                    // Ha kilépett a while-ból, akkor lett kapás
-                    Sleep(5500);
+                    if (vanEKapasod(k)) break;
+                    k++;
+                     Sleep(40);
+                } while (true);
+                Debug.WriteLine("KILÉPETT A WHILE-BÓL");
+                // Ha kilépett a while-ból, akkor lett kapás
+                Sleep(5100);
+                for (int j = 0; j < 4; j++)
+                {
                     Bitmap mp1 = BeturolCsinalKepet("betu1.png");
-                    DebugPrtscreen("prt.png");
+                    mp1.Save($"file1{j}.png");
                     // csinál két képet, 0.5 ms eltéréssel és ha kb ugyanazok,
                     // akkor nem mozog a kör, tehát csak egyszer kell lenyomni a betűt
-                    Sleep(200);
+                    Sleep(550);
                     Bitmap mp2 = BeturolCsinalKepet("betu2.png");
-                    mp2.Save("file.png");
-                    char betu = MelyikBetu(mp2);
+                    mp2.Save($"file2{j}.png");
+                    Bitmap bv = mp2.Clone(new RectangleF(35, 55, 35, 35), mp2.PixelFormat);
+                    bv.Save($"cropped{j}.png");
+                    char betu = MelyikBetu(bv);
+                    if (betu == '1' || betu == '|') betu = 'i';
                     Keys key = Billentyuzet.CharacterToKeysEnum(betu).Item1;
-                    Debug.WriteLine("EZ A BETŰŰŰŰŰŰ::::"+betu);
+                    Debug.WriteLine("EZ A BETŰŰŰŰŰŰ:"+betu);
                     if (KetKepMegegyezik(mp1,mp2))
                     {
                         // egyszer kell nyomni
@@ -64,22 +69,25 @@ namespace projform
                     {
                         SpamKey(key);
                     }
+                    Debug.WriteLine("Most vár egy picikét");
+                    Sleep(3000);
+                    Debug.WriteLine("Megvárta a picikét");
                 }
 
                 // utolsó lépés
                 // a kamerát beállítsa alapállásba
                 for (int i = 0; i < 200; i++)
                 {
-                    Sleep(7);
+                     Sleep(7);
                     MouseOperations.Move(0, 1);
                 }
             } while (kezdjeujra);
             MessageBox.Show("Befejeződött a horgászás!");
         }
-        void FelrakEgyCsalit()
+         void FelrakEgyCsalit()
         {
             Lenyom(Keys.Two);
-            Sleep(50);
+             Sleep(50);
         }
         void DebugPrtscreen(string filename)
         {
@@ -95,26 +103,25 @@ namespace projform
             memoryGraphics.CopyFromScreen(scw / 2 - w / 2, sch / 2 - h / 2 - 100, 0, 0, new Size(memoryImage.Width, memoryImage.Height));
             memoryImage.Save(filename);
         }
-        void BedobjaACsalit()
+         void BedobjaACsalit()
         {
+            Lenyom(Keys.M);
             Billentyuzet.MoveMouseTo(900, 250); // ráviszem az egeret a vízre
-            ablakotValt(); // kitabolok, mert klikkelni kell
-            Sleep(500);
+            tabolEgyszer(); // kitabolok, mert klikkelni kell
             MouseOperations.LeftClickHoldDown(); // bebalklikkeltem az ablakba és most tartja a klikket
             // most csinál egy képernyőképet és megnézi, hogy hol van a zöld négyzet,
             // majd kiszámolja, hogy hány másodperc múlva kell felengedni a balklikket
             var watch = Stopwatch.StartNew();
+             Sleep(60); // azért kell, mert túl gyors a program, aztán megfogja és korán csinál képernyőképet
 
             int ido = MennyiIdeigVarjon();
 
             watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            randomInfoLabel.Text = elapsedMs.ToString();
-            Sleep(ido);
+            Debug.WriteLine("Eltelt másodperc: " + watch.ElapsedMilliseconds);
+             Sleep(ido);
             ablakotValt(); // gec nem kell felengedni az egeret, elég kialtabolni xddd
             tabolEgyszer(); // vissza is kell tabolni
             Lenyom(Keys.M);
-            Lenyom(Keys.I);
         }
         int MennyiIdeigVarjon()
         {
@@ -124,13 +131,15 @@ namespace projform
 
             // na most megkapjuk, hogy a zöld négyzetnek a közepe milyen magasan van, innen képlettel megkapjuk, hogy mennyi másodpercet kell várni
 
-            float ido = ((osszido - ((kisZoldNegyzetMagassaga() * osszido) / teglalapmagassaga)) * 1000) + 60; // megszorozzuk 1000-el mert ms-et kell megadni a Sleep()-nek
-            return Convert.ToInt32(ido); // a sleep csak int-et fogad el
+            float ido = (osszido - ((kisZoldNegyzetMagassaga() * osszido) / teglalapmagassaga)) * 1000; // megszorozzuk 1000-el mert ms-et kell megadni a Sleep()-nek
+            Debug.WriteLine(ido);
+            int t =Convert.ToInt32(ido);
+            
+            return t;// a sleep csak int-et fogad el
         }
         int kisZoldNegyzetMagassaga() // a zöld kis négyzet alulról számítva milyen magasan van
         {
-            Sleep(60); // azért kell, mert túl gyors a program, aztán megfogja és korán csinál képernyőképet
-            Bitmap memoryImage = new Bitmap(25, 280);
+            Bitmap memoryImage = new Bitmap(22, 280);
 
             Graphics memoryGraphics = Graphics.FromImage(memoryImage);
 
@@ -152,7 +161,7 @@ namespace projform
 
             return 0;
         }
-        bool vanEKapasod()
+        bool vanEKapasod(int k)
         {
             int w = 100;
             int h = 25;
@@ -160,13 +169,14 @@ namespace projform
 
             Graphics memoryGraphics = Graphics.FromImage(memoryImage);
 
-            memoryGraphics.CopyFromScreen(650, 956, 0, 0, new Size(memoryImage.Width, memoryImage.Height));
+            memoryGraphics.CopyFromScreen(738, 955, 0, 0, new Size(memoryImage.Width, memoryImage.Height));
+            //memoryImage.Save($"xd/kep{k}.png");
             using (var input = new OcrInput())
             {
                 input.AddImage(memoryImage);
                 OcrResult r = ocrText.Read(input);
                 Debug.WriteLine("A text:"+r.Text);
-                if (!r.Text.Contains("meg, ame")) return true;
+                if (r.Text.Contains("van!")) return true;
             }
             return false;
         }
@@ -229,15 +239,15 @@ namespace projform
 
             int equalElements = iHash1.Zip(iHash2, (i, j) => i == j).Count(eq => eq);
             Debug.WriteLine("equal Elements: " + equalElements);
-            if (equalElements > 500) return true; // 24*24 = 576, tehát kb 500-től nagyobbnak kell lenni, hogy ugyanaz legyen
+            if (equalElements > 9800) return true;
             return false;
         }
-        private void SpamKey(Keys key)
+         void SpamKey(Keys key)
         {
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 30; i++)
             {
                 Lenyom(key);
-                Sleep(100);
+                 Sleep(50);
             }
         }
         public static List<bool> GetHash(Bitmap bmp)
@@ -270,9 +280,9 @@ namespace projform
         void tabolEgyszer()
         {
             Billentyuzet.SendKey(Keys.RightAlt, KeyState.Down);
-            Sleep(1000);
+            Thread.Sleep(1000);
             Billentyuzet.SendKey(Keys.Tab);
-            Sleep(1000);
+            Thread.Sleep(1000);
             Billentyuzet.SendKey(Keys.RightAlt, KeyState.Up);
 
         }

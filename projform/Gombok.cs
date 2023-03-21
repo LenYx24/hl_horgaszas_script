@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace projform
 {
@@ -25,19 +26,9 @@ namespace projform
         {
             MouseOperations.RightClick();
         }
-        private void Teszt()
+        void Teszt()
         {
-            int w = 200;
-            int h = 200;
-            Bitmap memoryImage = new Bitmap(w, h);
-
-            Graphics memoryGraphics = Graphics.FromImage(memoryImage);
-
-            int scw = 1920;
-            int sch = 1080;
-
-            memoryGraphics.CopyFromScreen(scw / 2 - w / 2 , sch / 2 - h / 2 - 100, 0, 0, new Size(memoryImage.Width, memoryImage.Height));
-            memoryImage.Save("vaneimage.png");
+            SpamKey(Interceptor.Keys.M);
         }
         private void Kepernyokep()
         {
@@ -53,7 +44,7 @@ namespace projform
             // save it  
             memoryImage.Save(fileName);
         }
-        private void BetukrolKepek()
+         void BetukrolKepek()
         {
             int i = 1;
             while (true)
@@ -79,19 +70,12 @@ namespace projform
                 MessageBox.Show(text);
             }
         }
-        private void IdoTeszt()
+         void IdoTeszt()
         {
-            int k = 0;
-            // most meg kb 1 másodpercenként csinál egy printscreen-t addig amíg nem lesz kapása
-            do
-            {
-                Stopwatch sw = Stopwatch.StartNew();
-                if (vanEBetuAKepen(k)) break;
-                k++;
-                sw.Stop();
-                Debug.WriteLine("MS: "+sw.ElapsedMilliseconds.ToString());
-                Sleep(200);
-            } while (true);
+            Stopwatch sw = Stopwatch.StartNew();
+            SpamKey(Interceptor.Keys.M);
+            sw.Stop();
+            Debug.WriteLine("MS: "+sw.ElapsedMilliseconds.ToString());
         }
     }
 }
