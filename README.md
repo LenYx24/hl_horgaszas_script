@@ -1,6 +1,10 @@
 HL_horgaszas_script
 ===========
 
+Hasznos linkek:
+[interceptor github](https://github.com/jasonpang/Interceptor)
+[interceptor blog](http://www.oblita.com/interception.html)
+
 **Todok**:
 1. Mta teljes képernyős módban
 2. Tabolás helyett fókuszálni az ablakot
