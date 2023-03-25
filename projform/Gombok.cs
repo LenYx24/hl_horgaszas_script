@@ -28,7 +28,11 @@ namespace projform
         }
         void Teszt()
         {
-            SpamKey(Interceptor.Keys.M);
+            for (int i = 0; i < 200; i++)
+            {
+                Sleep(7);
+                MouseOperations.Move(0, 1);
+            }
         }
         private void Kepernyokep()
         {

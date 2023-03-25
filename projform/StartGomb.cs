@@ -44,35 +44,8 @@ namespace projform
                 } while (true);
                 Debug.WriteLine("KILÉPETT A WHILE-BÓL");
                 // Ha kilépett a while-ból, akkor lett kapás
-                Sleep(5100);
-                for (int j = 0; j < 4; j++)
-                {
-                    Bitmap mp1 = BeturolCsinalKepet("betu1.png");
-                    mp1.Save($"file1{j}.png");
-                    // csinál két képet, 0.5 ms eltéréssel és ha kb ugyanazok,
-                    // akkor nem mozog a kör, tehát csak egyszer kell lenyomni a betűt
-                    Sleep(550);
-                    Bitmap mp2 = BeturolCsinalKepet("betu2.png");
-                    mp2.Save($"file2{j}.png");
-                    Bitmap bv = mp2.Clone(new RectangleF(35, 55, 35, 35), mp2.PixelFormat);
-                    bv.Save($"cropped{j}.png");
-                    char betu = MelyikBetu(bv);
-                    if (betu == '1' || betu == '|') betu = 'i';
-                    Keys key = Billentyuzet.CharacterToKeysEnum(betu).Item1;
-                    Debug.WriteLine("EZ A BETŰŰŰŰŰŰ:"+betu);
-                    if (KetKepMegegyezik(mp1,mp2))
-                    {
-                        // egyszer kell nyomni
-                        Lenyom(key);
-                    }
-                    else
-                    {
-                        SpamKey(key);
-                    }
-                    Debug.WriteLine("Most vár egy picikét");
-                    Sleep(3000);
-                    Debug.WriteLine("Megvárta a picikét");
-                }
+                Sleep(5000);
+                Modszer3();
 
                 // utolsó lépés
                 // a kamerát beállítsa alapállásba
@@ -84,7 +57,138 @@ namespace projform
             } while (kezdjeujra);
             MessageBox.Show("Befejeződött a horgászás!");
         }
-         void FelrakEgyCsalit()
+        void Modszer1()
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                Bitmap mp1 = BeturolCsinalKepet();
+                mp1.Save($"file1{j}.png");
+                // csinál két képet, 0.5 ms eltéréssel és ha kb ugyanazok,
+                // akkor nem mozog a kör, tehát csak egyszer kell lenyomni a betűt
+                Sleep(100);
+                Bitmap mp2 = BeturolCsinalKepet();
+                mp2.Save($"file2{j}.png");
+                Bitmap bv = mp2.Clone(new RectangleF(35, 55, 35, 35), mp2.PixelFormat);
+                bv.Save($"cropped{j}.png");
+                char betu = MelyikBetu(bv);
+                if (betu == '1' || betu == '|') betu = 'i';
+                Keys key = Billentyuzet.CharacterToKeysEnum(betu).Item1;
+                Debug.WriteLine("EZ A BETŰŰŰŰŰŰ:" + betu);
+                bool b = KetKepMegegyezik(mp1, mp2);
+                Debug.WriteLine("boolean értéke" + b);
+                if (b)
+                {
+                    // egyaszer kell nyomni
+                    Lenyom(key);
+                    Debug.WriteLine("Egy gomb");
+
+                }
+                else
+                {
+                    SpamKey(key);
+                    Debug.WriteLine("Több gomb");
+                }
+                Debug.WriteLine("Most vár egy picikét");
+                Sleep(3400);
+                Debug.WriteLine("Megvárta a picikét");
+            }
+        }
+        void Modszer2()
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                Bitmap mp1 = BeturolCsinalKepet();
+                mp1.Save($"file1{j}.png");
+                Bitmap bv = mp1.Clone(new RectangleF(35, 55, 35, 35), mp1.PixelFormat);
+                bv.Save($"cropped{j}.png");
+                char betu = MelyikBetu(bv);
+                if (betu == '1' || betu == '|') betu = 'i';
+                Keys key = Billentyuzet.CharacterToKeysEnum(betu).Item1;
+                Debug.WriteLine("EZ A BETŰŰŰŰŰŰ:" + betu);
+                Lenyom(key);
+                Sleep(200);
+                Bitmap mp2 = BeturolCsinalKepet();
+                var watch = Stopwatch.StartNew();
+                bool k = hasGreen(mp2); 
+                watch.Stop();
+                Debug.WriteLine("Eltelt másodperc: " + watch.ElapsedMilliseconds);
+                if (k)
+                {
+                    Sleep(3400);
+                    continue;
+                }
+                else
+                {
+                    SpamKey(key);
+                }
+                Sleep(3400);
+            }
+        }
+        bool hasGreen(Bitmap mp2)
+        {
+            int num = 10;
+            for(int i = 0; i < mp2.Width; i++)
+            {
+                for(int j = 0; j < mp2.Height; j++)
+                {
+                    float hue = mp2.GetPixel(i, j).GetHue();
+                    if (80 < hue && hue < 150)
+                    {
+                        num++;
+                        if (num == 10) return true;
+                    }
+                }
+                
+            }
+            return false;
+        }
+        void Modszer3()
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                Bitmap mp1 = BeturolCsinalKepet();
+                mp1.Save($"file1{j}.png");
+                Bitmap bv = mp1.Clone(new RectangleF(35, 60, 30, 30), mp1.PixelFormat);
+                bv.Save($"cropped{j}.png");
+                char betu = MelyikBetu(bv);
+                if (betu == '1' || betu == '|') betu = 'i';
+                Keys key = Billentyuzet.CharacterToKeysEnum(betu).Item1;
+                Debug.WriteLine("EZ A BETŰŰŰŰŰŰ:" + betu);
+                Lenyom(key);
+                Sleep(1700);
+                Bitmap mp2 = BeturolCsinalKepet();
+                mp2.Save($"haswhite{j}.png");
+                if (hasWhite(mp2))
+                {
+                    Sleep(500);
+                    continue;
+                }
+                else
+                {
+                    SpamKey(key);
+                }
+                Sleep(500);
+            }
+        }
+        bool hasWhite(Bitmap mp2)
+        {
+            int num = 10;
+            for (int i = 0; i < mp2.Width; i+=2)
+            {
+                for (int j = 0; j < mp2.Height; j++)
+                {
+                    float hue = mp2.GetPixel(i, j).GetHue();
+                    if (80 < hue && hue < 150)
+                    {
+                        num++;
+                        if (num == 10) return true;
+                    }
+                }
+
+            }
+            return false;
+        }
+        void FelrakEgyCsalit()
         {
             Lenyom(Keys.Two);
              Sleep(50);
@@ -204,7 +308,7 @@ namespace projform
             }
             return false;
         }
-        private Bitmap BeturolCsinalKepet(string filename)
+        private Bitmap BeturolCsinalKepet()
         {
             int w = 100;
             int h = 100;
@@ -246,7 +350,7 @@ namespace projform
         {
             for (int i = 0; i < 30; i++)
             {
-                Lenyom(key);
+                 Lenyom(key);
                  Sleep(50);
             }
         }
